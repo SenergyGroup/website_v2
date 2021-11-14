@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Our Services on Senergy Group, LLC</title>
+    <link>https://www.senergygroup.org/products/</link>
+    <description>Recent content in Our Services on Senergy Group, LLC</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 01 Nov 2021 12:33:45 +1000</lastBuildDate><atom:link href="https://www.senergygroup.org/products/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Data Consultancy</title>
+      <link>https://www.senergygroup.org/products/data-consultancy/</link>
+      <pubDate>Mon, 01 Nov 2021 12:33:45 +1000</pubDate>
+      
+      <guid>https://www.senergygroup.org/products/data-consultancy/</guid>
+      <description>Our team specializes in data analytics and can support you or your business. Our data consultancy services include data cleaning, data analysis, and data visualizations. To purchase our services, please reach out to us by submitting a request and an outline of your project with an expected timeline. Our team will reach out to you and create a plan for your project.
+Click here to start a project</description>
+    </item>
+    
+  </channel>
+</rss>

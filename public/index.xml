@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Senergy Group, LLC</title>
+    <link>https://www.senergygroup.org/</link>
+    <description>Recent content on Senergy Group, LLC</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 01 Nov 2021 12:33:45 +1000</lastBuildDate><atom:link href="https://www.senergygroup.org/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Data Consultancy</title>
+      <link>https://www.senergygroup.org/products/data-consultancy/</link>
+      <pubDate>Mon, 01 Nov 2021 12:33:45 +1000</pubDate>
+      
+      <guid>https://www.senergygroup.org/products/data-consultancy/</guid>
+      <description>Our team specializes in data analytics and can support you or your business. Our data consultancy services include data cleaning, data analysis, and data visualizations. To purchase our services, please reach out to us by submitting a request and an outline of your project with an expected timeline. Our team will reach out to you and create a plan for your project.
+Click here to start a project</description>
+    </item>
+    
+    <item>
+      <title>About Us</title>
+      <link>https://www.senergygroup.org/about/</link>
+      <pubDate>Mon, 01 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.senergygroup.org/about/</guid>
+      <description>&lt;p&gt;Our goal is to teach you how to take your real estate purchases to the next level, whether you are a first time home buyer or a seasoned professional. The guides we create are based on our own experience and we provide the tools we use ourselves when researching a prospective property. All the data we use is freely available online, and we link all of our sources so you can follow along throughout the process.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Markdown Syntax Guide</title>
+      <link>https://www.senergygroup.org/blog/markdown-syntax/</link>
+      <pubDate>Mon, 11 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.senergygroup.org/blog/markdown-syntax/</guid>
+      <description>&lt;p&gt;This article offers a sample of basic Markdown syntax that can be used in Hugo content files, also it shows whether basic HTML elements are decorated with CSS in a Hugo theme.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Contact Us</title>
+      <link>https://www.senergygroup.org/contact/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.senergygroup.org/contact/</guid>
+      <description>To send us a message, please fill out the form below.
+      </description>
+    </item>
+    
+  </channel>
+</rss>
