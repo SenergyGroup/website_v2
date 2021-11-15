@@ -7,6 +7,9 @@ weight: 1
 description: Have our team analyze data for you.
 ---
 
-Our team specializes in data analytics and can support you or your business. Our data consultancy services include data cleaning, data analysis, and data visualizations. To purchase our services, please reach out to us by submitting a request and an outline of your project with an expected timeline. Our team will reach out to you and create a plan for your project.
-
-[Click here to start a project](https://senergygroup.org/contact/)
+Our team specializes in data analytics and we are available to support you or your business. Our data consultancy services include data cleaning, data analysis, and data visualizations. \
+\
+To purchase our services, please submit a request by using the form below. Please provide an outline of your project with an expected timeline for completion. Our team will contact you and create a plan based on your request.
+\
+\
+{{< form2 >}}
