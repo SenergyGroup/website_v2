@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://www.senergygroup.org/products/data-consultancy/</loc>
+    <loc>https://www.senergygroup.org/products/consultancy/</loc>
     <lastmod>2021-11-01T12:33:45+10:00</lastmod>
   </url><url>
     <loc>https://www.senergygroup.org/</loc>
@@ -11,35 +11,35 @@
     <loc>https://www.senergygroup.org/products/</loc>
     <lastmod>2021-11-01T12:33:45+10:00</lastmod>
   </url><url>
+    <loc>https://www.senergygroup.org/categories/7-steps/</loc>
+    <lastmod>2021-11-01T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://www.senergygroup.org/about/</loc>
     <lastmod>2021-11-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.senergygroup.org/categories/</loc>
-    <lastmod>2019-03-11T00:00:00+00:00</lastmod>
+    <lastmod>2021-11-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://www.senergygroup.org/tags/css/</loc>
-    <lastmod>2019-03-11T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://www.senergygroup.org/tags/html/</loc>
-    <lastmod>2019-03-11T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://www.senergygroup.org/blog/</loc>
-    <lastmod>2019-03-11T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://www.senergygroup.org/tags/markdown/</loc>
-    <lastmod>2019-03-11T00:00:00+00:00</lastmod>
+    <loc>https://www.senergygroup.org/tags/data/</loc>
+    <lastmod>2021-11-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.senergygroup.org/blog/markdown-syntax/</loc>
-    <lastmod>2019-03-11T00:00:00+00:00</lastmod>
+    <lastmod>2021-11-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://www.senergygroup.org/categories/syntax/</loc>
-    <lastmod>2019-03-11T00:00:00+00:00</lastmod>
+    <loc>https://www.senergygroup.org/blog/</loc>
+    <lastmod>2021-11-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.senergygroup.org/categories/real-estate/</loc>
+    <lastmod>2021-11-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.senergygroup.org/tags/real-estate/</loc>
+    <lastmod>2021-11-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.senergygroup.org/tags/research/</loc>
+    <lastmod>2021-11-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.senergygroup.org/tags/</loc>
-    <lastmod>2019-03-11T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://www.senergygroup.org/categories/themes/</loc>
-    <lastmod>2019-03-11T00:00:00+00:00</lastmod>
+    <lastmod>2021-11-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.senergygroup.org/contact/</loc>
   </url><url>
