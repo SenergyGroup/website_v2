@@ -1,13 +1,15 @@
 [
   {
-    "title": "Follow Along",
-    "description": "Our posts are designed so you can follow along with us.",
-    "icon": "icon-desktop_windows"
+    "title": "Need a Data Scientist?",
+    "description": "View our products to see how we can help.",
+    "icon": "icon-desktop_windows",
+    "link": "https://www.senergygroup.org/products/"
   },
   {
     "title": "Learn",
     "description": "Our guides will teach you everything you need to know when buying a house.",
-    "icon": "icon-lightbulb_outline"
+    "icon": "icon-lightbulb_outline",
+    "link": "https://www.senergygroup.org/blog/"
   },
   {
     "title": "Github",
