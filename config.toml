@@ -30,7 +30,7 @@ googleAnalytics = "G-8580J3VSDB"
     fa5 = true
 
   [params.homepage_meta_tags]
-    meta_description = "A real estate company with a specialization in data"
+    meta_description = "A data science company."
     meta_og_title = "Senergy Group"
     meta_og_type = "website"
     meta_og_url = "https://senergygroup.org"
