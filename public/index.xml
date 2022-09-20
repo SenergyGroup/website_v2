@@ -6,7 +6,7 @@
     <description>Recent content on Senergy Group, LLC</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 01 Nov 2021 12:33:45 +1000</lastBuildDate><atom:link href="https://www.senergygroup.org/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 19 Sep 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://www.senergygroup.org/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Consultancy</title>
       <link>https://www.senergygroup.org/products/consultancy/</link>
@@ -17,21 +17,21 @@
     </item>
     
     <item>
+      <title>Using the Census API</title>
+      <link>https://www.senergygroup.org/blog/markdown-syntax/</link>
+      <pubDate>Mon, 19 Sep 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.senergygroup.org/blog/markdown-syntax/</guid>
+      <description>&lt;p&gt;This article walks through how to access the Census API using R.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>About Us</title>
       <link>https://www.senergygroup.org/about/</link>
       <pubDate>Mon, 01 Nov 2021 00:00:00 +0000</pubDate>
       
       <guid>https://www.senergygroup.org/about/</guid>
       <description>&lt;p&gt;Data science is quickly becoming one of the hottest fields in the tech industry, but not everyone knows exactly what a data scientist does. Our goal is to empower you with the techniques and strategies of a data scientist and the benefit they can bring to your organization. The guides we create are based on our own experience and we provide the tools we use ourselves when working with prospective clients.&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>How to Research Properties: 7 Effective Steps</title>
-      <link>https://www.senergygroup.org/blog/markdown-syntax/</link>
-      <pubDate>Mon, 01 Nov 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://www.senergygroup.org/blog/markdown-syntax/</guid>
-      <description>&lt;p&gt;This article offers a sample of basic Markdown syntax that can be used in Hugo content files, also it shows whether basic HTML elements are decorated with CSS in a Hugo theme.&lt;/p&gt;</description>
     </item>
     
     <item>

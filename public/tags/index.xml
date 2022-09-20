@@ -6,31 +6,40 @@
     <description>Recent content in Tags on Senergy Group, LLC</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 01 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.senergygroup.org/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 19 Sep 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://www.senergygroup.org/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>data</title>
+      <title>API</title>
+      <link>https://www.senergygroup.org/tags/api/</link>
+      <pubDate>Mon, 19 Sep 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.senergygroup.org/tags/api/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Census</title>
+      <link>https://www.senergygroup.org/tags/census/</link>
+      <pubDate>Mon, 19 Sep 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.senergygroup.org/tags/census/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Data</title>
       <link>https://www.senergygroup.org/tags/data/</link>
-      <pubDate>Mon, 01 Nov 2021 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 19 Sep 2022 00:00:00 +0000</pubDate>
       
       <guid>https://www.senergygroup.org/tags/data/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>real-estate</title>
-      <link>https://www.senergygroup.org/tags/real-estate/</link>
-      <pubDate>Mon, 01 Nov 2021 00:00:00 +0000</pubDate>
+      <title>Mapping</title>
+      <link>https://www.senergygroup.org/tags/mapping/</link>
+      <pubDate>Mon, 19 Sep 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://www.senergygroup.org/tags/real-estate/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>research</title>
-      <link>https://www.senergygroup.org/tags/research/</link>
-      <pubDate>Mon, 01 Nov 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://www.senergygroup.org/tags/research/</guid>
+      <guid>https://www.senergygroup.org/tags/mapping/</guid>
       <description></description>
     </item>
     

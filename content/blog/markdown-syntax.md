@@ -1,21 +1,22 @@
 +++
 author = "Aaron Reinke, MPH"
-title = "How to Research Properties: 7 Effective Steps"
-date = "2021-11-01"
-description = "Learn the 7 steps in order to research real estate properties effectively."
+title = "Using the Census API"
+date = "2022-09-19"
+description = "Learn How to Use the Census API Using R."
 tags = [
-    "real-estate",
-    "research",
-    "data",
+    "API",
+    "Census",
+    "Data",
+    "Mapping"
 ]
 categories = [
-    "7-steps",
-    "Real-Estate",
+    "API",
+    "Census",
 ]
-series = ["Research Guide"]
+series = ["Census Data"]
 +++
 
-This article offers a sample of basic Markdown syntax that can be used in Hugo content files, also it shows whether basic HTML elements are decorated with CSS in a Hugo theme.
+This article walks through how to access the Census API using R. 
 <!--more-->
 
 ## Headings
