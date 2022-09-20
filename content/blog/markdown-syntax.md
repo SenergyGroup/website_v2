@@ -16,43 +16,106 @@ categories = [
 series = ["Census Data"]
 +++
 
-This article walks through how to access the Census API using R. 
+ 
 <!--more-->
 
-## Headings
+### Setup
 
-The following HTML `<h1>`—`<h6>` elements represent six levels of section headings. `<h1>` is the highest section level while `<h6>` is the lowest.
+This article walks through how to access the Census API using R. If you've never
+coded in R before, you can still follow along.
 
-# H1
-## H2
-### H3
-#### H4
-##### H5
-###### H6
 
-## Paragraph
+### Required Packages
 
-Xerum, quo qui aut unt expliquam qui dolut labo. Aque venitatiusda cum, voluptionse latur sitiae dolessi aut parist aut dollo enim qui voluptate ma dolestendit peritin re plis aut quas inctum laceat est volestemque commosa as cus endigna tectur, offic to cor sequas etum rerum idem sintibus eiur? Quianimin porecus evelectur, cum que nis nust voloribus ratem aut omnimi, sitatur? Quiatem. Nam, omnis sum am facea corem alique molestrunt et eos evelece arcillit ut aut eos eos nus, sin conecerem erum fuga. Ri oditatquam, ad quibus unda veliamenimin cusam et facea ipsamus es exerum sitate dolores editium rerore eost, temped molorro ratiae volorro te reribus dolorer sperchicium faceata tiustia prat.
+The four packages we need are *tidycensus*, *tigris*, *tmap*,and *tidyverse*. *Tidycensus* is the package we will use to access the US Census and gather data, and *tidyverse* is the package we will use to merge and tidy the data.
 
-Itatur? Quiatae cullecum rem ent aut odis in re eossequodi nonsequ idebis ne sapicia is sinveli squiatum, core et que aut hariosam ex eat.
+```(r)
+library(tidycensus)
+library(tigris)
+library(tmap)
+library(leaflet)
+library(tidyverse)
+```
 
-## Blockquotes
+### Census Key
 
-The blockquote element represents content that is quoted from another source, optionally with a citation which must be within a `footer` or `cite` element, and optionally with in-line changes such as annotations and abbreviations.
+First, we want input our Census API key. You can obtain one through the Census website located here: https://api.census.gov/data/key_signup.html.
 
-#### Blockquote without attribution
+```(r)
+key <- rstudioapi::askForPassword(prompt = "Please Enter Your API Key")
+tidycensus::census_api_key(key = key)
+```
 
-> Tiam, ad mint andaepu dandae nostion secatur sequo quae.
-> **Note** that you can use *Markdown syntax* within a blockquote.
+### Optional Settings
+Downloading shape files is time consuming, so instead of downloading them each time the script is run, you can use the argument *tigris_use_cache = TRUE* to save the files locally.
 
-#### Blockquote with attribution
+```{r}
+options(tigris_use_cache = TRUE)
+```
 
-> Don't communicate by sharing memory, share memory by communicating.<br>
-> — <cite>Rob Pike[^1]</cite>
+### API Call
+This example will call the API to fetch Polk County, Iowa data by Census tract. The variables in the example are population counts for Hispanic and non-Hispanic by race. The *summary_var* argument is the total population in each Census Tract. This will be used later to create proportions. The year argument is the *year* of the decennial data I want to pull. Finally, *geometry* is to include the shape files with the API pull.
+
+#### Basic Example
+
+```{r}
+PolkCounty_race <- get_decennial(
+  geography = "tract",
+  state = "IA",
+  county = "Polk",
+  table = "P2",
+  year = 2020,
+) 
+```
+The example above will pull all Census Tracts in Polk County, Iowa using the decennial
+Census for the year 2020. The *table* argument specifies which variables the API should pull. This example pulls all the variable related to Hispanic origin by race.
+
+#### More Advanced Example
+```{r}
+PolkCounty_race <- get_decennial(
+  geography = "tract",
+  state = "IA",
+  county = "Polk",
+  variables = c(
+    Hispanic = "P2_002N",
+    White = "P2_005N",
+    Black = "P2_006N",
+    Native = "P2_007N",
+    Asian = "P2_008N",
+    Two =  "P2_011N"
+  ),
+  summary_var = "P2_001N",
+  year = 2020,
+  geometry = TRUE
+) %>%
+  mutate(percent = round(100 * (value / summary_value), digits = 1))
+```
+The example above will pull all Census Tracts in Polk County, Iowa using the decennial
+Census for the year 2020. The data pull specifies which variables we want to pull within the P2 table and renames them. The *geometry* argument asks the API to also pull the polygon shape file for plotting using maps. 
+
+### Layer Creation
+
+The following code filters the dataset by each race and ethnicity so we can create separate shape files for analysis.
+
+
+```{r}
+Polk.Black.or.African.American <- filter(blackhawk_race, 
+                         variable == "Black")
+Polk.Hispanic.or.Latino <- filter(blackhawk_race, 
+                         variable == "Hispanic")
+Polk.White <- filter(blackhawk_race, 
+                         variable == "White")
+Polk.Native.American.or.Alaska.Native <- filter(blackhawk_race, 
+                         variable == "Native")
+Polk.Asian <- filter(blackhawk_race, 
+                         variable == "Asian")
+Polk.Two.or.More.Races <- filter(blackhawk_race, 
+                         variable == "Two")
+```
 
 [^1]: The above quote is excerpted from Rob Pike's [talk](https://www.youtube.com/watch?v=PAAkCSZUG1c) during Gopherfest, November 18, 2015.
 
-## Tables
+### Creating a Map
 
 Tables aren't part of the core Markdown spec, but Hugo supports supports them out-of-the-box.
 

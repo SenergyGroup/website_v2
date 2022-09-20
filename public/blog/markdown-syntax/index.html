@@ -159,31 +159,70 @@
             <hr class="my-2">
         </section>
         
-        <div class="content py-1"><p>This article walks through how to access the Census API using R.</p>
-<h2 id="headings">Headings</h2>
-<p>The following HTML <code>&lt;h1&gt;</code>—<code>&lt;h6&gt;</code> elements represent six levels of section headings. <code>&lt;h1&gt;</code> is the highest section level while <code>&lt;h6&gt;</code> is the lowest.</p>
-<h1 id="h1">H1</h1>
-<h2 id="h2">H2</h2>
-<h3 id="h3">H3</h3>
-<h4 id="h4">H4</h4>
-<h5 id="h5">H5</h5>
-<h6 id="h6">H6</h6>
-<h2 id="paragraph">Paragraph</h2>
-<p>Xerum, quo qui aut unt expliquam qui dolut labo. Aque venitatiusda cum, voluptionse latur sitiae dolessi aut parist aut dollo enim qui voluptate ma dolestendit peritin re plis aut quas inctum laceat est volestemque commosa as cus endigna tectur, offic to cor sequas etum rerum idem sintibus eiur? Quianimin porecus evelectur, cum que nis nust voloribus ratem aut omnimi, sitatur? Quiatem. Nam, omnis sum am facea corem alique molestrunt et eos evelece arcillit ut aut eos eos nus, sin conecerem erum fuga. Ri oditatquam, ad quibus unda veliamenimin cusam et facea ipsamus es exerum sitate dolores editium rerore eost, temped molorro ratiae volorro te reribus dolorer sperchicium faceata tiustia prat.</p>
-<p>Itatur? Quiatae cullecum rem ent aut odis in re eossequodi nonsequ idebis ne sapicia is sinveli squiatum, core et que aut hariosam ex eat.</p>
-<h2 id="blockquotes">Blockquotes</h2>
-<p>The blockquote element represents content that is quoted from another source, optionally with a citation which must be within a <code>footer</code> or <code>cite</code> element, and optionally with in-line changes such as annotations and abbreviations.</p>
-<h4 id="blockquote-without-attribution">Blockquote without attribution</h4>
-<blockquote>
-<p>Tiam, ad mint andaepu dandae nostion secatur sequo quae.
-<strong>Note</strong> that you can use <em>Markdown syntax</em> within a blockquote.</p>
-</blockquote>
-<h4 id="blockquote-with-attribution">Blockquote with attribution</h4>
-<blockquote>
-<p>Don&rsquo;t communicate by sharing memory, share memory by communicating.<!-- raw HTML omitted -->
-— <!-- raw HTML omitted -->Rob Pike<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup><!-- raw HTML omitted --></p>
-</blockquote>
-<h2 id="tables">Tables</h2>
+        <div class="content py-1"><h3 id="setup">Setup</h3>
+<p>This article walks through how to access the Census API using R. If you&rsquo;ve never
+coded in R before, you can still follow along.</p>
+<h3 id="required-packages">Required Packages</h3>
+<p>The four packages we need are <em>tidycensus</em>, <em>tigris</em>, <em>tmap</em>,and <em>tidyverse</em>. <em>Tidycensus</em> is the package we will use to access the US Census and gather data, and <em>tidyverse</em> is the package we will use to merge and tidy the data.</p>
+<pre tabindex="0"><code class="language-(r)" data-lang="(r)">library(tidycensus)
+library(tigris)
+library(tmap)
+library(leaflet)
+library(tidyverse)
+</code></pre><h3 id="census-key">Census Key</h3>
+<p>First, we want input our Census API key. You can obtain one through the Census website located here: <a href="https://api.census.gov/data/key_signup.html">https://api.census.gov/data/key_signup.html</a>.</p>
+<pre tabindex="0"><code class="language-(r)" data-lang="(r)">key &lt;- rstudioapi::askForPassword(prompt = &quot;Please Enter Your API Key&quot;)
+tidycensus::census_api_key(key = key)
+</code></pre><h3 id="optional-settings">Optional Settings</h3>
+<p>Downloading shape files is time consuming, so instead of downloading them each time the script is run, you can use the argument <em>tigris_use_cache = TRUE</em> to save the files locally.</p>
+<pre tabindex="0"><code class="language-{r}" data-lang="{r}">options(tigris_use_cache = TRUE)
+</code></pre><h3 id="api-call">API Call</h3>
+<p>This example will call the API to fetch Polk County, Iowa data by Census tract. The variables in the example are population counts for Hispanic and non-Hispanic by race. The <em>summary_var</em> argument is the total population in each Census Tract. This will be used later to create proportions. The year argument is the <em>year</em> of the decennial data I want to pull. Finally, <em>geometry</em> is to include the shape files with the API pull.</p>
+<h4 id="basic-example">Basic Example</h4>
+<pre tabindex="0"><code class="language-{r}" data-lang="{r}">PolkCounty_race &lt;- get_decennial(
+  geography = &quot;tract&quot;,
+  state = &quot;IA&quot;,
+  county = &quot;Polk&quot;,
+  table = &quot;P2&quot;,
+  year = 2020,
+) 
+</code></pre><p>The example above will pull all Census Tracts in Polk County, Iowa using the decennial
+Census for the year 2020. The <em>table</em> argument specifies which variables the API should pull. This example pulls all the variable related to Hispanic origin by race.</p>
+<h4 id="more-advanced-example">More Advanced Example</h4>
+<pre tabindex="0"><code class="language-{r}" data-lang="{r}">PolkCounty_race &lt;- get_decennial(
+  geography = &quot;tract&quot;,
+  state = &quot;IA&quot;,
+  county = &quot;Polk&quot;,
+  variables = c(
+    Hispanic = &quot;P2_002N&quot;,
+    White = &quot;P2_005N&quot;,
+    Black = &quot;P2_006N&quot;,
+    Native = &quot;P2_007N&quot;,
+    Asian = &quot;P2_008N&quot;,
+    Two =  &quot;P2_011N&quot;
+  ),
+  summary_var = &quot;P2_001N&quot;,
+  year = 2020,
+  geometry = TRUE
+) %&gt;%
+  mutate(percent = round(100 * (value / summary_value), digits = 1))
+</code></pre><p>The example above will pull all Census Tracts in Polk County, Iowa using the decennial
+Census for the year 2020. The data pull specifies which variables we want to pull within the P2 table and renames them. The <em>geometry</em> argument asks the API to also pull the polygon shape file for plotting using maps.</p>
+<h3 id="layer-creation">Layer Creation</h3>
+<p>The following code filters the dataset by each race and ethnicity so we can create separate shape files for analysis.</p>
+<pre tabindex="0"><code class="language-{r}" data-lang="{r}">Polk.Black.or.African.American &lt;- filter(blackhawk_race, 
+                         variable == &quot;Black&quot;)
+Polk.Hispanic.or.Latino &lt;- filter(blackhawk_race, 
+                         variable == &quot;Hispanic&quot;)
+Polk.White &lt;- filter(blackhawk_race, 
+                         variable == &quot;White&quot;)
+Polk.Native.American.or.Alaska.Native &lt;- filter(blackhawk_race, 
+                         variable == &quot;Native&quot;)
+Polk.Asian &lt;- filter(blackhawk_race, 
+                         variable == &quot;Asian&quot;)
+Polk.Two.or.More.Races &lt;- filter(blackhawk_race, 
+                         variable == &quot;Two&quot;)
+</code></pre><h3 id="creating-a-map">Creating a Map</h3>
 <p>Tables aren&rsquo;t part of the core Markdown spec, but Hugo supports supports them out-of-the-box.</p>
 <table>
 <thead>
@@ -283,15 +322,7 @@
 <li>Cheese</li>
 </ul>
 </li>
-</ul>
-<section class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1" role="doc-endnote">
-<p>The above quote is excerpted from Rob Pike&rsquo;s <a href="https://www.youtube.com/watch?v=PAAkCSZUG1c">talk</a> during Gopherfest, November 18, 2015.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</section></div>
+</ul></div>
         <div class="share m-2 grid grid-cols-2 lg:grid-cols-3 gap-2">
             <a href="https://twitter.com/intent/tweet?url=https%3a%2f%2fwww.senergygroup.org%2fblog%2fmarkdown-syntax%2f&text=Using%20the%20Census%20API" target="_blank"
                 title="Tweet" class="share-button twitter">
