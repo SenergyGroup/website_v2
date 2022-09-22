@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-8580J3VSDB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-8580J3VSDB');
+</script>
+
+<meta charset="utf-8">
+    <title>Senergy Group, LLC | Using the Census API</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" href="/favicon-32x32.png">
+    
+    <link href="/css/fa5.min.css" rel="stylesheet" type="text/css">
+    
+    
+    
+        
+        <link rel="stylesheet" href="https://www.senergygroup.org/css/styles.min.3d736b290a2d8ba0047e38e8d23f1df25289a6db0b7ef206cd2b2a53d82c6129.css" integrity="sha256-PXNrKQoti6AEfjjo0j8d8lKJptsLfvIGzSsqU9gsYSk=">
+    
+    
+    <link href="/css/style.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/custom.css">
+<meta property="og:title" content="Senergy Group, LLC | Using the Census API" />
+
+
+
+
+<meta name="description" content="Learn How to Use the Census API Using R.">
+<meta property="og:title" content=" | " />
+<meta property="og:site_name" content="Senergy Group, LLC">
+<meta property="og:description" content="Learn How to Use the Census API Using R.">
+<meta property="og:url" content="https://www.senergygroup.org/blog/censusapi/">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@tech_chiba">
+
+<link rel="canonical" href="https://www.senergygroup.org/blog/censusapi/">
+
+<meta name="twitter:description" content="Learn How to Use the Census API Using R.">
+<meta property="article:published_time" content="2022-09-19T00:00:00&#43;00:00">
+<meta property="article:updated_time" content="2022-09-19T00:00:00&#43;00:00">
+
+
+
+
+
+<meta property="og:image" content="https://www.senergygroup.org">
+<meta property="og:image:url" content="https://www.senergygroup.org">
+
+<meta name="twitter:title" content="Using the Census API">
+<link rel="preload" href="/css/monokai-sublime.min.css" as="style"
+    onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="/css/sweetalert2.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+</head>
+
+<body class="flex flex-col min-h-screen">
+    <main class="flex-grow"><header>
+    <div id="overlay">
+        <ul class="text-center list-none text-white text-3xl">
+            
+            <li class="p-2">
+                <a href="/products/">
+                    <span>Products</span>
+                </a>
+            </li>
+            
+            <li class="p-2">
+                <a href="/blog/">
+                    <span>Blog</span>
+                </a>
+            </li>
+            
+            <li class="p-2">
+                <a href="/about/">
+                    <span>About</span>
+                </a>
+            </li>
+            
+            <li class="p-2">
+                <a href="/contact/">
+                    <span>Contact</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <nav class="flex items-center justify-between flex-wrap bg-opacity-100 p-8">
+        <div class="flex items-center flex-shrink-0 text-xl text-grey-900 mr-6">
+            <a href="https://www.senergygroup.org"><img alt="Senergy Group Logo" class="h-14 mr-3"
+                    src="/img/logo/logo.png"></a>
+        </div>
+        <div class="block lg:hidden">
+            <div id="hamburgerbtn" class="flex cursor-pointer items-center w-14 h-10 py-2 rounded mopen">
+                <span class="top"></span>
+                <span class="middle"></span>
+                <span class="bottom"></span>
+            </div>
+        </div>
+        <div class="hidden w-full block flex-grow lg:flex lg:items-center lg:w-auto" id="mobileMenu">
+            <div class="text-lg lg:flex-grow">
+            </div>
+            <div class="text-lg">
+                
+                <a href="/products/" class="duration-200 block mt-4 lg:inline-block lg:mt-0 text-black hover:opacity-60 mr-8">
+                    Products
+                </a>
+                
+                <a href="/blog/" class="duration-200 block mt-4 lg:inline-block lg:mt-0 text-black hover:opacity-60 mr-8">
+                    Blog
+                </a>
+                
+                <a href="/about/" class="duration-200 block mt-4 lg:inline-block lg:mt-0 text-black hover:opacity-60 mr-8">
+                    About
+                </a>
+                
+                <a href="/contact/" class="duration-200 block mt-4 lg:inline-block lg:mt-0 text-black hover:opacity-60 mr-8">
+                    Contact
+                </a>
+                
+            </div>
+        </div>
+    </nav>
+</header><div class="scroll-top rounded-full">
+            <span class="icon-keyboard_arrow_up text-2xl"></span>
+        </div>
+<div class="mx-auto my-10 max-w-6xl">
+    <div class="mx-3 col-span-3 lg:col-span-2 px-2">
+        <h1 class="title text-5xl">Using the Census API</h1>
+        <section class="mb-4">
+            <hr class="my-2">
+            <h4 id="date"><span class="icon-access_time text-xl mr-2"></span>2022/09/19 </h4>
+            
+            <h4><span class="icon-person text-xl mt-1 mr-2"></span>Aaron Reinke, MPH</h4>
+            
+            
+            <div id="categories">
+                <span class="icon-folder text-xl"></span>
+                
+                <span
+                    class="inline-flex py-1 leading-4 content-center justify-center px-1 hover:text-black"><a
+                        href="https://www.senergygroup.org/categories/r">R</a></span>
+                
+                <span
+                    class="inline-flex py-1 leading-4 content-center justify-center px-1 hover:text-black"><a
+                        href="https://www.senergygroup.org/categories/api">API</a></span>
+                
+                <span
+                    class="inline-flex py-1 leading-4 content-center justify-center px-1 hover:text-black"><a
+                        href="https://www.senergygroup.org/categories/census">Census</a></span>
+                
+            </div>
+            
+            <hr class="my-2">
+        </section>
+        
+        <div class="content py-1"><h3 id="setup">Setup</h3>
+<p>This article walks through how to access the Census API using R. If you&rsquo;ve never
+coded in R before, you can still follow along.</p>
+<h3 id="required-packages">Required Packages</h3>
+<p>The three packages we need are <em>tidycensus</em>, <em>tigris</em>, and <em>tidyverse</em>. <em>Tidycensus</em> is the package we will use to access the US Census and gather data, and <em>tidyverse</em> is the package we will use to merge and tidy the data.</p>
+<pre tabindex="0"><code class="language-(r)" data-lang="(r)">library(tidycensus)
+library(tigris)
+library(tidyverse)
+</code></pre><h3 id="census-key">Census Key</h3>
+<p>First, we want input our Census API key. You can obtain one through the Census website located here: <a href="https://api.census.gov/data/key_signup.html">https://api.census.gov/data/key_signup.html</a>.</p>
+<pre tabindex="0"><code class="language-(r)" data-lang="(r)">key &lt;- rstudioapi::askForPassword(prompt = &quot;Please Enter Your API Key&quot;)
+tidycensus::census_api_key(key = key)
+</code></pre><h3 id="api-call">API Call</h3>
+<p>This example will call the API to fetch Polk County, Iowa data by Census tract. The variables in the example are population counts for Hispanic and non-Hispanic by race. The <em>summary_var</em> argument is the total population in each Census Tract. This will be used later to create proportions. The year argument is the <em>year</em> of the decennial data I want to pull. Finally, <em>geometry</em> is to include the shape files with the API pull.</p>
+<h4 id="basic-example">Basic Example</h4>
+<pre tabindex="0"><code class="language-{r}" data-lang="{r}">PolkCounty_race &lt;- get_decennial(
+  geography = &quot;tract&quot;,
+  state = &quot;IA&quot;,
+  county = &quot;Polk&quot;,
+  table = &quot;P2&quot;,
+  year = 2020,
+) 
+</code></pre><p>This example above will pull all Census Tracts in Polk County, Iowa using the decennial
+Census for the year 2020. The <em>table</em> argument specifies which variables the API should pull. This example pulls all the variable related to Hispanic origin by race.</p>
+<h4 id="more-advanced-example">More Advanced Example</h4>
+<pre tabindex="0"><code class="language-{r}" data-lang="{r}">PolkCounty_race &lt;- get_decennial(
+  geography = &quot;tract&quot;, #Pulls Census Tract data
+  state = &quot;IA&quot;,        #For Iowa
+  county = &quot;Polk&quot;,     #In Polk County
+  variables = c(
+    Black = &quot;P2_006N&quot;, #Pulls the variable for Black or African American, non-Hispanic
+  ),
+  summary_var = &quot;P2_001N&quot;, #The total population of Polk County, Iowa
+  year = 2020,         #Pulls Census data for the year 2020
+  geometry = TRUE      #Pulls geometric shape file for GIS plotting
+) 
+
+
+## You can create another variable by calculating the proportion of the total 
+
+PolkCounty_race &lt;- PolkCounty_race %&gt;%
+  mutate(percent = round(100 * (value / summary_value), digits = 1))
+</code></pre><p>The example above will pull all Census Tracts in Polk County, Iowa using the decennial
+Census for the year 2020. This time we specified variables instead of table. This allows us to specify which variables we want to pull within the table. If you eventually want to plot the data on the map, use the <em>geometry</em> argument. The <em>geometry</em> argument asks the API to pull the polygon shape file so you don&rsquo;t need to merge the data later.</p>
+<h3 id="optional-settings">Optional Settings</h3>
+<p>Downloading shape files is time consuming, so instead of downloading them each time the script is run, you can use the argument <em>tigris_use_cache = TRUE</em> to save the files locally.</p>
+<pre tabindex="0"><code class="language-{r}" data-lang="{r}">options(tigris_use_cache = TRUE)
+</code></pre><h3 id="layer-creation">Layer Creation</h3>
+<p>The following code filters the data set by race, so we can create drill down and plot only the Black or African American, non-Hispanic for analysis.</p>
+<pre tabindex="0"><code class="language-{r}" data-lang="{r}">Polk.Black.or.African.American &lt;- filter(PolkCounty_race, 
+                         variable == &quot;Black&quot;)
+
+</code></pre><h3 id="creating-a-map">Creating a Map</h3>
+<p>The following packages will allow you to plot the Census data on an interactive map.</p>
+<pre tabindex="0"><code class="language-{r}" data-lang="{r}">library(tmap)
+library(leaflet)
+</code></pre><p>Run the code below to set the map view to interactive.</p>
+<pre tabindex="0"><code class="language-{r}" data-lang="{r}">tmap_mode(&quot;view&quot;)
+</code></pre><p>I prefer the Esri base-map. You can select the base-map by running the following code.</p>
+<pre tabindex="0"><code class="language-{r}" data-lang="{r}">tmap_options(basemaps = c(&quot;Esri.WorldTopoMap&quot;)) #&lt;&lt;
+</code></pre><p>To create your map, you will need to select which data set you want to plot. Then, you will need to specify which variable you want representing the color of the choropleth map.</p>
+<pre tabindex="0"><code class="language-{r}" data-lang="{r}">tmap_obj &lt;- tm_shape(Polk.Black.or.African.American) +
+  tm_polygons(col = &quot;Percent&quot;,
+          style = &quot;quantile&quot;,
+          n = 7,
+          palette = &quot;Purples&quot;,
+          title = &quot;Percent Black or &lt;br/&gt;
+          African American&lt;br/&gt;by Census Tract&quot;,
+          alpha = 0.6,
+          group = &quot;Black.or.African.American&quot;,
+          id = &quot;NAME&quot;)
+</code></pre><h3 id="final-code">Final Code</h3>
+<pre tabindex="0"><code class="language-(r)" data-lang="(r)">library(tidycensus)
+library(tigris)
+library(tidyverse)
+library(tmap)
+library(leaflet)
+
+key &lt;- rstudioapi::askForPassword(prompt = &quot;Please Enter Your API Key&quot;)
+tidycensus::census_api_key(key = key)
+
+options(tigris_use_cache = TRUE)
+
+PolkCounty_race &lt;- get_decennial(
+  geography = &quot;tract&quot;, #Pulls Census Tract data
+  state = &quot;IA&quot;,        #For Iowa
+  county = &quot;Polk&quot;,     #In Polk County
+  variables = c(
+    Black = &quot;P2_006N&quot;, #Pulls the variable for Black or African American, non-Hispanic
+  ),
+  summary_var = &quot;P2_001N&quot;, #The total population of Polk County, Iowa
+  year = 2020,         #Pulls Census data for the year 2020
+  geometry = TRUE      #Pulls geometric shape file for GIS plotting
+) 
+
+PolkCounty_race &lt;- PolkCounty_race %&gt;%
+  mutate(percent = round(100 * (value / summary_value), digits = 1))
+  
+
+###Layer Creation###
+
+Polk.Black.or.African.American &lt;- filter(PolkCounty_race, 
+                         variable == &quot;Black&quot;)
+                         
+                         
+###Plotting Maps###
+
+tmap_mode(&quot;view&quot;)
+tmap_options(basemaps = c(&quot;Esri.WorldTopoMap&quot;))
+
+tmap_obj &lt;- tm_shape(Polk.Black.or.African.American) +
+  tm_polygons(col = &quot;Percent&quot;,
+          style = &quot;quantile&quot;,
+          n = 7,
+          palette = &quot;Purples&quot;,
+          title = &quot;Percent Black or &lt;br/&gt;
+          African American&lt;br/&gt;by Census Tract&quot;,
+          alpha = 0.6,
+          group = &quot;Black.or.African.American&quot;,
+          id = &quot;NAME&quot;)
+          
+tmap_obj        
+
+</code></pre></div>
+        <div class="share m-2 grid grid-cols-2 lg:grid-cols-3 gap-2">
+            <a href="https://twitter.com/intent/tweet?url=https%3a%2f%2fwww.senergygroup.org%2fblog%2fcensusapi%2f&text=Using%20the%20Census%20API" target="_blank"
+                title="Tweet" class="share-button twitter">
+                <div class="text-white text-center">
+                    <span class="icon-twitter text-lg mr-2"></span>Twitter
+                </div>
+            </a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fwww.senergygroup.org%2fblog%2fcensusapi%2f&t=Using%20the%20Census%20API" target="_blank"
+                title="Facebook" class="share-button facebook">
+                <div class="text-white text-center">
+                    <span class="icon-facebook text-lg mr-2"></span>Facebook
+                </div>
+            </a>
+            <a href="https://b.hatena.ne.jp/add?mode=confirm&url=https%3a%2f%2fwww.senergygroup.org%2fblog%2fcensusapi%2f&title=Using%20the%20Census%20API" target="_blank"
+                title="hatena" class="share-button hatena">
+                <div class="text-white text-center">
+                    <span class="icon-hatenabookmark text-lg mr-2"></span>Hatena
+                </div>
+            </a>
+            <a href="https://getpocket.com/edit?url=https%3a%2f%2fwww.senergygroup.org%2fblog%2fcensusapi%2f&title=Using%20the%20Census%20API" target="_blank" title="pocket"
+                class="share-button pocket">
+                <div class="text-white text-center">
+                    <span class="icon-get-pocket text-lg mr-2"></span>Pocket
+                </div>
+            </a>
+            <a href="https://timeline.line.me/social-plugin/share?url=https%3a%2f%2fwww.senergygroup.org%2fblog%2fcensusapi%2f" class="share-button line">
+                <div class="text-white text-center">
+                    <span class="icon-line text-lg mr-2"></span>LINE
+                </div>
+            </a>
+            <a href="javascript:OnClickURL();" class="share-button url" title="Copy to Clipboard"
+                data-clipboard-text="Using the Census API https://www.senergygroup.org/blog/censusapi/" id="url">
+                <div class="text-white text-center">
+                    <span class="icon-link text-lg mr-2"></span>Copy
+                </div>
+            </a>
+        </div>
+        <hr class="py-4">
+        <aside id="meta">
+            <div class="grid grid-cols-2">
+                <div class="col-span-1">
+                    
+                </div>
+                
+            </div>
+        </aside>
+    </div>
+</div>
+
+    </main><footer class="bg-tlgray-100">
+    
+    <script src="/js/clipboard.min.js"></script>
+    <script src="/js/highlight.min.js"></script>
+    <script src="/js/highlightjs-line-numbers.min.js"></script>
+    <script src="/js/sweetalert2.min.js"></script>
+    <script>
+        hljs.initHighlightingOnLoad();
+        hljs.initLineNumbersOnLoad();
+        new ClipboardJS('.url');
+
+        function OnClickURL() {
+            Swal.fire({
+                icon: 'success',
+                title: 'Copied!',
+                text: 'Copied the URL and title.'
+            })
+        }
+    </script>
+    
+    <script>
+        function toggleNav() {
+            var hamburger = document.getElementById("hamburgerbtn");
+            var overlay = document.getElementById("overlay");
+            var body = document.body;
+    
+            hamburger.addEventListener("click", function () {
+                overlay.classList.toggle("open");
+                hamburger.classList.toggle("is-open");
+                body.classList.toggle("scroll-lock");
+            });
+        }
+        toggleNav();
+    
+        document.querySelector('.scroll-top').addEventListener('click', () => {
+            document.documentElement.scrollTop = 0;
+        });
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Open+Sans&display=swap" rel="stylesheet">
+    <div class="flex items-center justify-between flex-wrap bg-gray-800 p-8 text-white">
+        <div class="items-center text-xl text-grey-900 mr-6">
+            Senergy Group
+        </div>
+        <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto" id="mobileMenu">
+            <div class="text-lg lg:flex-grow">
+            </div>
+            <div class="text-lg">
+                
+                <a href="/" class="block mt-4 lg:inline-block lg:mt-0 text-gray-300 hover:text-white mr-8">
+                    Home
+                </a>
+                
+                <a href="https://github.com/SenergyGroup" class="block mt-4 lg:inline-block lg:mt-0 text-gray-300 hover:text-white mr-8">
+                    Github
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</footer></body>
+
+</html>
