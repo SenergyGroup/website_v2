@@ -2,7 +2,7 @@
 title: "Web Scraping"
 date: 2021-11-01T12:33:45+10:00
 draft: false
-featured: true
+featured: false
 weight: 2
 description: Customize your very own web scraper.
 ---

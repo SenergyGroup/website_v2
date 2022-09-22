@@ -2,7 +2,7 @@
 title: "Data Dashboard"
 date: 2021-11-01T12:33:45+10:00
 draft: false
-featured: true
+featured: false
 weight: 1
 description: Have our staff build your next data dashboard.
 ---
