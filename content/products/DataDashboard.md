@@ -10,7 +10,7 @@ description: Have our staff build your next data dashboard.
 Developing a data dashboard can be time consuming and expensive. Let our team build it for you, so you can focus on the things that matter.
 \
 \
-If you're interested in purchasing our data dashboard service please fill out the form below and submit your request. Our team will contact you once they have reviewed your submission. 
+If you're interested in purchasing our data dashboard service please fill out the form below. Our team will contact you once they have reviewed your submission. 
 \
 \
 {{< form2 >}}

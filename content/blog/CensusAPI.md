@@ -2,7 +2,7 @@
 author = "Aaron Reinke, MPH"
 title = "Using the Census API"
 date = "2022-09-19"
-description = "Learn How to Use the Census API Using R."
+description = "Learn How to Use the Census API Using R Programming."
 tags = [
     "R",
     "API",
