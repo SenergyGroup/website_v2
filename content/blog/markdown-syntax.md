@@ -4,18 +4,19 @@ title = "Using the Census API"
 date = "2022-09-19"
 description = "Learn How to Use the Census API Using R."
 tags = [
+    "R",
     "API",
     "Census",
     "Data",
     "Mapping"
 ]
 categories = [
+    "R",
     "API",
     "Census",
 ]
 series = ["Census Data"]
 +++
-
  
 <!--more-->
 
@@ -27,13 +28,11 @@ coded in R before, you can still follow along.
 
 ### Required Packages
 
-The four packages we need are *tidycensus*, *tigris*, *tmap*,and *tidyverse*. *Tidycensus* is the package we will use to access the US Census and gather data, and *tidyverse* is the package we will use to merge and tidy the data.
+The three packages we need are *tidycensus*, *tigris*, and *tidyverse*. *Tidycensus* is the package we will use to access the US Census and gather data, and *tidyverse* is the package we will use to merge and tidy the data.
 
 ```(r)
 library(tidycensus)
 library(tigris)
-library(tmap)
-library(leaflet)
 library(tidyverse)
 ```
 
@@ -44,13 +43,6 @@ First, we want input our Census API key. You can obtain one through the Census w
 ```(r)
 key <- rstudioapi::askForPassword(prompt = "Please Enter Your API Key")
 tidycensus::census_api_key(key = key)
-```
-
-### Optional Settings
-Downloading shape files is time consuming, so instead of downloading them each time the script is run, you can use the argument *tigris_use_cache = TRUE* to save the files locally.
-
-```{r}
-options(tigris_use_cache = TRUE)
 ```
 
 ### API Call
@@ -67,133 +59,138 @@ PolkCounty_race <- get_decennial(
   year = 2020,
 ) 
 ```
-The example above will pull all Census Tracts in Polk County, Iowa using the decennial
+This example above will pull all Census Tracts in Polk County, Iowa using the decennial
 Census for the year 2020. The *table* argument specifies which variables the API should pull. This example pulls all the variable related to Hispanic origin by race.
 
 #### More Advanced Example
 ```{r}
 PolkCounty_race <- get_decennial(
-  geography = "tract",
-  state = "IA",
-  county = "Polk",
+  geography = "tract", #Pulls Census Tract data
+  state = "IA",        #For Iowa
+  county = "Polk",     #In Polk County
   variables = c(
-    Hispanic = "P2_002N",
-    White = "P2_005N",
-    Black = "P2_006N",
-    Native = "P2_007N",
-    Asian = "P2_008N",
-    Two =  "P2_011N"
+    Black = "P2_006N", #Pulls the variable for Black or African American, non-Hispanic
   ),
-  summary_var = "P2_001N",
-  year = 2020,
-  geometry = TRUE
-) %>%
+  summary_var = "P2_001N", #The total population of Polk County, Iowa
+  year = 2020,         #Pulls Census data for the year 2020
+  geometry = TRUE      #Pulls geometric shape file for GIS plotting
+) 
+
+
+## You can create another variable by calculating the proportion of the total 
+
+PolkCounty_race <- PolkCounty_race %>%
   mutate(percent = round(100 * (value / summary_value), digits = 1))
 ```
 The example above will pull all Census Tracts in Polk County, Iowa using the decennial
-Census for the year 2020. The data pull specifies which variables we want to pull within the P2 table and renames them. The *geometry* argument asks the API to also pull the polygon shape file for plotting using maps. 
+Census for the year 2020. This time we specified variables instead of table. This allows us to specify which variables we want to pull within the table. If you eventually want to plot the data on the map, use the *geometry* argument. The *geometry* argument asks the API to pull the polygon shape file so you don't need to merge the data later. 
+
+### Optional Settings
+Downloading shape files is time consuming, so instead of downloading them each time the script is run, you can use the argument *tigris_use_cache = TRUE* to save the files locally.
+
+```{r}
+options(tigris_use_cache = TRUE)
+```
 
 ### Layer Creation
 
-The following code filters the dataset by each race and ethnicity so we can create separate shape files for analysis.
+The following code filters the data set by race, so we can create drill down and plot only the Black or African American, non-Hispanic for analysis.
 
 
 ```{r}
-Polk.Black.or.African.American <- filter(blackhawk_race, 
+Polk.Black.or.African.American <- filter(PolkCounty_race, 
                          variable == "Black")
-Polk.Hispanic.or.Latino <- filter(blackhawk_race, 
-                         variable == "Hispanic")
-Polk.White <- filter(blackhawk_race, 
-                         variable == "White")
-Polk.Native.American.or.Alaska.Native <- filter(blackhawk_race, 
-                         variable == "Native")
-Polk.Asian <- filter(blackhawk_race, 
-                         variable == "Asian")
-Polk.Two.or.More.Races <- filter(blackhawk_race, 
-                         variable == "Two")
+
 ```
 
-[^1]: The above quote is excerpted from Rob Pike's [talk](https://www.youtube.com/watch?v=PAAkCSZUG1c) during Gopherfest, November 18, 2015.
 
 ### Creating a Map
 
-Tables aren't part of the core Markdown spec, but Hugo supports supports them out-of-the-box.
+The following packages will allow you to plot the Census data on an interactive map.
 
-   Name | Age
---------|------
-    Bob | 27
-  Alice | 23
-
-#### Inline Markdown within tables
-
-| Italics   | Bold     | Code   |
-| --------  | -------- | ------ |
-| *italics* | **bold** | `code` |
-
-## Code Blocks
-
-#### Code block with backticks
-
-```html
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Example HTML5 Document</title>
-</head>
-<body>
-  <p>Test</p>
-</body>
-</html>
+```{r}
+library(tmap)
+library(leaflet)
 ```
 
-#### Code block indented with four spaces
+Run the code below to set the map view to interactive.
 
-    <!doctype html>
-    <html lang="en">
-    <head>
-      <meta charset="utf-8">
-      <title>Example HTML5 Document</title>
-    </head>
-    <body>
-      <p>Test</p>
-    </body>
-    </html>
+```{r}
+tmap_mode("view")
+```
 
-#### Code block with Hugo's internal highlight shortcode
-{{< highlight html >}}
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Example HTML5 Document</title>
-</head>
-<body>
-  <p>Test</p>
-</body>
-</html>
-{{< /highlight >}}
+I prefer the Esri base-map. You can select the base-map by running the following code.
+```{r}
+tmap_options(basemaps = c("Esri.WorldTopoMap")) #<<
+```
 
-## List Types
+To create your map, you will need to select which data set you want to plot. Then, you will need to specify which variable you want representing the color of the choropleth map.
 
-#### Ordered List
+```{r}
+tmap_obj <- tm_shape(Polk.Black.or.African.American) +
+  tm_polygons(col = "Percent",
+          style = "quantile",
+          n = 7,
+          palette = "Purples",
+          title = "Percent Black or <br/>
+          African American<br/>by Census Tract",
+          alpha = 0.6,
+          group = "Black.or.African.American",
+          id = "NAME")
+```
 
-1. First item
-2. Second item
-3. Third item
+### Final Code
 
-#### Unordered List
+```(r)
+library(tidycensus)
+library(tigris)
+library(tidyverse)
+library(tmap)
+library(leaflet)
 
-* List item
-* Another item
-* And another item
+key <- rstudioapi::askForPassword(prompt = "Please Enter Your API Key")
+tidycensus::census_api_key(key = key)
 
-#### Nested list
+options(tigris_use_cache = TRUE)
 
-* Fruit
-  * Apple
-  * Orange
-  * Banana
-* Dairy
-  * Milk
-  * Cheese
+PolkCounty_race <- get_decennial(
+  geography = "tract", #Pulls Census Tract data
+  state = "IA",        #For Iowa
+  county = "Polk",     #In Polk County
+  variables = c(
+    Black = "P2_006N", #Pulls the variable for Black or African American, non-Hispanic
+  ),
+  summary_var = "P2_001N", #The total population of Polk County, Iowa
+  year = 2020,         #Pulls Census data for the year 2020
+  geometry = TRUE      #Pulls geometric shape file for GIS plotting
+) 
+
+PolkCounty_race <- PolkCounty_race %>%
+  mutate(percent = round(100 * (value / summary_value), digits = 1))
+  
+
+###Layer Creation###
+
+Polk.Black.or.African.American <- filter(PolkCounty_race, 
+                         variable == "Black")
+                         
+                         
+###Plotting Maps###
+
+tmap_mode("view")
+tmap_options(basemaps = c("Esri.WorldTopoMap"))
+
+tmap_obj <- tm_shape(Polk.Black.or.African.American) +
+  tm_polygons(col = "Percent",
+          style = "quantile",
+          n = 7,
+          palette = "Purples",
+          title = "Percent Black or <br/>
+          African American<br/>by Census Tract",
+          alpha = 0.6,
+          group = "Black.or.African.American",
+          id = "NAME")
+          
+tmap_obj        
+
+```

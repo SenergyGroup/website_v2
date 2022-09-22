@@ -148,6 +148,10 @@
                 
                 <span
                     class="inline-flex py-1 leading-4 content-center justify-center px-1 hover:text-black"><a
+                        href="https://www.senergygroup.org/categories/r">R</a></span>
+                
+                <span
+                    class="inline-flex py-1 leading-4 content-center justify-center px-1 hover:text-black"><a
                         href="https://www.senergygroup.org/categories/api">API</a></span>
                 
                 <span
@@ -163,19 +167,14 @@
 <p>This article walks through how to access the Census API using R. If you&rsquo;ve never
 coded in R before, you can still follow along.</p>
 <h3 id="required-packages">Required Packages</h3>
-<p>The four packages we need are <em>tidycensus</em>, <em>tigris</em>, <em>tmap</em>,and <em>tidyverse</em>. <em>Tidycensus</em> is the package we will use to access the US Census and gather data, and <em>tidyverse</em> is the package we will use to merge and tidy the data.</p>
+<p>The three packages we need are <em>tidycensus</em>, <em>tigris</em>, and <em>tidyverse</em>. <em>Tidycensus</em> is the package we will use to access the US Census and gather data, and <em>tidyverse</em> is the package we will use to merge and tidy the data.</p>
 <pre tabindex="0"><code class="language-(r)" data-lang="(r)">library(tidycensus)
 library(tigris)
-library(tmap)
-library(leaflet)
 library(tidyverse)
 </code></pre><h3 id="census-key">Census Key</h3>
 <p>First, we want input our Census API key. You can obtain one through the Census website located here: <a href="https://api.census.gov/data/key_signup.html">https://api.census.gov/data/key_signup.html</a>.</p>
 <pre tabindex="0"><code class="language-(r)" data-lang="(r)">key &lt;- rstudioapi::askForPassword(prompt = &quot;Please Enter Your API Key&quot;)
 tidycensus::census_api_key(key = key)
-</code></pre><h3 id="optional-settings">Optional Settings</h3>
-<p>Downloading shape files is time consuming, so instead of downloading them each time the script is run, you can use the argument <em>tigris_use_cache = TRUE</em> to save the files locally.</p>
-<pre tabindex="0"><code class="language-{r}" data-lang="{r}">options(tigris_use_cache = TRUE)
 </code></pre><h3 id="api-call">API Call</h3>
 <p>This example will call the API to fetch Polk County, Iowa data by Census tract. The variables in the example are population counts for Hispanic and non-Hispanic by race. The <em>summary_var</em> argument is the total population in each Census Tract. This will be used later to create proportions. The year argument is the <em>year</em> of the decennial data I want to pull. Finally, <em>geometry</em> is to include the shape files with the API pull.</p>
 <h4 id="basic-example">Basic Example</h4>
@@ -186,143 +185,108 @@ tidycensus::census_api_key(key = key)
   table = &quot;P2&quot;,
   year = 2020,
 ) 
-</code></pre><p>The example above will pull all Census Tracts in Polk County, Iowa using the decennial
+</code></pre><p>This example above will pull all Census Tracts in Polk County, Iowa using the decennial
 Census for the year 2020. The <em>table</em> argument specifies which variables the API should pull. This example pulls all the variable related to Hispanic origin by race.</p>
 <h4 id="more-advanced-example">More Advanced Example</h4>
 <pre tabindex="0"><code class="language-{r}" data-lang="{r}">PolkCounty_race &lt;- get_decennial(
-  geography = &quot;tract&quot;,
-  state = &quot;IA&quot;,
-  county = &quot;Polk&quot;,
+  geography = &quot;tract&quot;, #Pulls Census Tract data
+  state = &quot;IA&quot;,        #For Iowa
+  county = &quot;Polk&quot;,     #In Polk County
   variables = c(
-    Hispanic = &quot;P2_002N&quot;,
-    White = &quot;P2_005N&quot;,
-    Black = &quot;P2_006N&quot;,
-    Native = &quot;P2_007N&quot;,
-    Asian = &quot;P2_008N&quot;,
-    Two =  &quot;P2_011N&quot;
+    Black = &quot;P2_006N&quot;, #Pulls the variable for Black or African American, non-Hispanic
   ),
-  summary_var = &quot;P2_001N&quot;,
-  year = 2020,
-  geometry = TRUE
-) %&gt;%
+  summary_var = &quot;P2_001N&quot;, #The total population of Polk County, Iowa
+  year = 2020,         #Pulls Census data for the year 2020
+  geometry = TRUE      #Pulls geometric shape file for GIS plotting
+) 
+
+
+## You can create another variable by calculating the proportion of the total 
+
+PolkCounty_race &lt;- PolkCounty_race %&gt;%
   mutate(percent = round(100 * (value / summary_value), digits = 1))
 </code></pre><p>The example above will pull all Census Tracts in Polk County, Iowa using the decennial
-Census for the year 2020. The data pull specifies which variables we want to pull within the P2 table and renames them. The <em>geometry</em> argument asks the API to also pull the polygon shape file for plotting using maps.</p>
-<h3 id="layer-creation">Layer Creation</h3>
-<p>The following code filters the dataset by each race and ethnicity so we can create separate shape files for analysis.</p>
-<pre tabindex="0"><code class="language-{r}" data-lang="{r}">Polk.Black.or.African.American &lt;- filter(blackhawk_race, 
+Census for the year 2020. This time we specified variables instead of table. This allows us to specify which variables we want to pull within the table. If you eventually want to plot the data on the map, use the <em>geometry</em> argument. The <em>geometry</em> argument asks the API to pull the polygon shape file so you don&rsquo;t need to merge the data later.</p>
+<h3 id="optional-settings">Optional Settings</h3>
+<p>Downloading shape files is time consuming, so instead of downloading them each time the script is run, you can use the argument <em>tigris_use_cache = TRUE</em> to save the files locally.</p>
+<pre tabindex="0"><code class="language-{r}" data-lang="{r}">options(tigris_use_cache = TRUE)
+</code></pre><h3 id="layer-creation">Layer Creation</h3>
+<p>The following code filters the data set by race, so we can create drill down and plot only the Black or African American, non-Hispanic for analysis.</p>
+<pre tabindex="0"><code class="language-{r}" data-lang="{r}">Polk.Black.or.African.American &lt;- filter(PolkCounty_race, 
                          variable == &quot;Black&quot;)
-Polk.Hispanic.or.Latino &lt;- filter(blackhawk_race, 
-                         variable == &quot;Hispanic&quot;)
-Polk.White &lt;- filter(blackhawk_race, 
-                         variable == &quot;White&quot;)
-Polk.Native.American.or.Alaska.Native &lt;- filter(blackhawk_race, 
-                         variable == &quot;Native&quot;)
-Polk.Asian &lt;- filter(blackhawk_race, 
-                         variable == &quot;Asian&quot;)
-Polk.Two.or.More.Races &lt;- filter(blackhawk_race, 
-                         variable == &quot;Two&quot;)
+
 </code></pre><h3 id="creating-a-map">Creating a Map</h3>
-<p>Tables aren&rsquo;t part of the core Markdown spec, but Hugo supports supports them out-of-the-box.</p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Age</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Bob</td>
-<td>27</td>
-</tr>
-<tr>
-<td>Alice</td>
-<td>23</td>
-</tr>
-</tbody>
-</table>
-<h4 id="inline-markdown-within-tables">Inline Markdown within tables</h4>
-<table>
-<thead>
-<tr>
-<th>Italics</th>
-<th>Bold</th>
-<th>Code</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><em>italics</em></td>
-<td><strong>bold</strong></td>
-<td><code>code</code></td>
-</tr>
-</tbody>
-</table>
-<h2 id="code-blocks">Code Blocks</h2>
-<h4 id="code-block-with-backticks">Code block with backticks</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!doctype html&gt;</span>
-&lt;<span style="color:#f92672">html</span> <span style="color:#a6e22e">lang</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;en&#34;</span>&gt;
-&lt;<span style="color:#f92672">head</span>&gt;
-  &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">charset</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;utf-8&#34;</span>&gt;
-  &lt;<span style="color:#f92672">title</span>&gt;Example HTML5 Document&lt;/<span style="color:#f92672">title</span>&gt;
-&lt;/<span style="color:#f92672">head</span>&gt;
-&lt;<span style="color:#f92672">body</span>&gt;
-  &lt;<span style="color:#f92672">p</span>&gt;Test&lt;/<span style="color:#f92672">p</span>&gt;
-&lt;/<span style="color:#f92672">body</span>&gt;
-&lt;/<span style="color:#f92672">html</span>&gt;
-</code></pre></div><h4 id="code-block-indented-with-four-spaces">Code block indented with four spaces</h4>
-<pre><code>&lt;!doctype html&gt;
-&lt;html lang=&quot;en&quot;&gt;
-&lt;head&gt;
-  &lt;meta charset=&quot;utf-8&quot;&gt;
-  &lt;title&gt;Example HTML5 Document&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-  &lt;p&gt;Test&lt;/p&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
-<h4 id="code-block-with-hugos-internal-highlight-shortcode">Code block with Hugo&rsquo;s internal highlight shortcode</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!doctype html&gt;</span>
-&lt;<span style="color:#f92672">html</span> <span style="color:#a6e22e">lang</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;en&#34;</span>&gt;
-&lt;<span style="color:#f92672">head</span>&gt;
-  &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">charset</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;utf-8&#34;</span>&gt;
-  &lt;<span style="color:#f92672">title</span>&gt;Example HTML5 Document&lt;/<span style="color:#f92672">title</span>&gt;
-&lt;/<span style="color:#f92672">head</span>&gt;
-&lt;<span style="color:#f92672">body</span>&gt;
-  &lt;<span style="color:#f92672">p</span>&gt;Test&lt;/<span style="color:#f92672">p</span>&gt;
-&lt;/<span style="color:#f92672">body</span>&gt;
-&lt;/<span style="color:#f92672">html</span>&gt;</code></pre></div>
-<h2 id="list-types">List Types</h2>
-<h4 id="ordered-list">Ordered List</h4>
-<ol>
-<li>First item</li>
-<li>Second item</li>
-<li>Third item</li>
-</ol>
-<h4 id="unordered-list">Unordered List</h4>
-<ul>
-<li>List item</li>
-<li>Another item</li>
-<li>And another item</li>
-</ul>
-<h4 id="nested-list">Nested list</h4>
-<ul>
-<li>Fruit
-<ul>
-<li>Apple</li>
-<li>Orange</li>
-<li>Banana</li>
-</ul>
-</li>
-<li>Dairy
-<ul>
-<li>Milk</li>
-<li>Cheese</li>
-</ul>
-</li>
-</ul></div>
+<p>The following packages will allow you to plot the Census data on an interactive map.</p>
+<pre tabindex="0"><code class="language-{r}" data-lang="{r}">library(tmap)
+library(leaflet)
+</code></pre><p>Run the code below to set the map view to interactive.</p>
+<pre tabindex="0"><code class="language-{r}" data-lang="{r}">tmap_mode(&quot;view&quot;)
+</code></pre><p>I prefer the Esri base-map. You can select the base-map by running the following code.</p>
+<pre tabindex="0"><code class="language-{r}" data-lang="{r}">tmap_options(basemaps = c(&quot;Esri.WorldTopoMap&quot;)) #&lt;&lt;
+</code></pre><p>To create your map, you will need to select which data set you want to plot. Then, you will need to specify which variable you want representing the color of the choropleth map.</p>
+<pre tabindex="0"><code class="language-{r}" data-lang="{r}">tmap_obj &lt;- tm_shape(Polk.Black.or.African.American) +
+  tm_polygons(col = &quot;Percent&quot;,
+          style = &quot;quantile&quot;,
+          n = 7,
+          palette = &quot;Purples&quot;,
+          title = &quot;Percent Black or &lt;br/&gt;
+          African American&lt;br/&gt;by Census Tract&quot;,
+          alpha = 0.6,
+          group = &quot;Black.or.African.American&quot;,
+          id = &quot;NAME&quot;)
+</code></pre><h3 id="final-code">Final Code</h3>
+<pre tabindex="0"><code class="language-(r)" data-lang="(r)">library(tidycensus)
+library(tigris)
+library(tidyverse)
+library(tmap)
+library(leaflet)
+
+key &lt;- rstudioapi::askForPassword(prompt = &quot;Please Enter Your API Key&quot;)
+tidycensus::census_api_key(key = key)
+
+options(tigris_use_cache = TRUE)
+
+PolkCounty_race &lt;- get_decennial(
+  geography = &quot;tract&quot;, #Pulls Census Tract data
+  state = &quot;IA&quot;,        #For Iowa
+  county = &quot;Polk&quot;,     #In Polk County
+  variables = c(
+    Black = &quot;P2_006N&quot;, #Pulls the variable for Black or African American, non-Hispanic
+  ),
+  summary_var = &quot;P2_001N&quot;, #The total population of Polk County, Iowa
+  year = 2020,         #Pulls Census data for the year 2020
+  geometry = TRUE      #Pulls geometric shape file for GIS plotting
+) 
+
+PolkCounty_race &lt;- PolkCounty_race %&gt;%
+  mutate(percent = round(100 * (value / summary_value), digits = 1))
+  
+
+###Layer Creation###
+
+Polk.Black.or.African.American &lt;- filter(PolkCounty_race, 
+                         variable == &quot;Black&quot;)
+                         
+                         
+###Plotting Maps###
+
+tmap_mode(&quot;view&quot;)
+tmap_options(basemaps = c(&quot;Esri.WorldTopoMap&quot;))
+
+tmap_obj &lt;- tm_shape(Polk.Black.or.African.American) +
+  tm_polygons(col = &quot;Percent&quot;,
+          style = &quot;quantile&quot;,
+          n = 7,
+          palette = &quot;Purples&quot;,
+          title = &quot;Percent Black or &lt;br/&gt;
+          African American&lt;br/&gt;by Census Tract&quot;,
+          alpha = 0.6,
+          group = &quot;Black.or.African.American&quot;,
+          id = &quot;NAME&quot;)
+          
+tmap_obj        
+
+</code></pre></div>
         <div class="share m-2 grid grid-cols-2 lg:grid-cols-3 gap-2">
             <a href="https://twitter.com/intent/tweet?url=https%3a%2f%2fwww.senergygroup.org%2fblog%2fmarkdown-syntax%2f&text=Using%20the%20Census%20API" target="_blank"
                 title="Tweet" class="share-button twitter">
