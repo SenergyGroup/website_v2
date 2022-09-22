@@ -9,11 +9,20 @@
     <lastBuildDate>Mon, 01 Nov 2021 12:33:45 +1000</lastBuildDate><atom:link href="https://www.senergygroup.org/products/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Data Dashboard</title>
-      <link>https://www.senergygroup.org/products/consultancy/</link>
+      <link>https://www.senergygroup.org/products/datadashboard/</link>
       <pubDate>Mon, 01 Nov 2021 12:33:45 +1000</pubDate>
       
-      <guid>https://www.senergygroup.org/products/consultancy/</guid>
+      <guid>https://www.senergygroup.org/products/datadashboard/</guid>
       <description>Developing a data dashboard can be time consuming and expensive. Let our team build it for you, so you can focus on the things that matter. If you&amp;rsquo;re interested in purchasing our data dashboard service please fill out the form below and submit your request. Our team will contact you once they have reviewed your submission.</description>
+    </item>
+    
+    <item>
+      <title>Web Scraping</title>
+      <link>https://www.senergygroup.org/products/webscraping/</link>
+      <pubDate>Mon, 01 Nov 2021 12:33:45 +1000</pubDate>
+      
+      <guid>https://www.senergygroup.org/products/webscraping/</guid>
+      <description>Information is power, but collecting that information can be tiresome. Web scraping can automate this tedious process giving you an edge over your competition. If you&amp;rsquo;re interested in purchasing our web scraping service please fill out the form below and submit your request. Our team will contact you once they have reviewed your submission.</description>
     </item>
     
   </channel>
