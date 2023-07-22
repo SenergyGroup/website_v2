@@ -2,3 +2,48 @@
  This CSS file is used to override the existing styles of the theme.
  You can change the article headings, fonts, colors, etc.
 */
+
+@font-face {
+  font-family: 'FontAwesome';
+  src:
+    url('./fonts/fontawesome-webfont.tff') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+body {
+  font-family: "FontAwesome", "Avenir Next", sans-serif;
+  font-weight: 300;
+}
+
+#overlay {
+  visibility: hidden;
+  display: flex;
+  transition: 0.3s linear;
+  position: absolute;
+  z-index: 900;
+  align-items: center;
+  justify-content: center;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: #5C5552;
+  opacity: 0;
+}
+
+.content {
+  margin-bottom: 3em;
+  font-family: "FontAwesome", "Avenir Next", sans-serif;
+}
+
+.sans {
+  font-family: "FontAwesome", "Avenir Next", sans-serif;;
+}
+
+samp {
+  font-family: "FontAwesome", "Avenir Next", sans-serif;
+    monospace;
+  font-size: 1em;
+}

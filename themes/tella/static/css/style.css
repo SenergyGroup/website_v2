@@ -1,6 +1,19 @@
 /* font */
 
 @font-face {
+  font-family: 'FontAwesome';
+  src:
+    url('./fonts/fontawesome-webfont.tff') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+
+
+
+/*
+@font-face {
   font-family: 'icomoon';
   src:
     url('./fonts/icomoon.ttf?k0g81o') format('truetype'),
@@ -11,9 +24,10 @@
   font-display: block;
 }
 
+
 [class^="icon-"], [class*=" icon-"] {
-  /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'icomoon' !important;
+  /* use !important to prevent issues with browser extensions that change fonts 
+  font-family: 'FontAwesome' !important;
   speak: never;
   font-style: normal;
   font-weight: normal;
@@ -21,10 +35,12 @@
   text-transform: none;
   line-height: 1;
 
-  /* Better Font Rendering =========== */
+  /* Better Font Rendering =========== 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+*/
 
 .icon-facebook:before {
   content: "\f09a";
@@ -99,7 +115,7 @@
   content: "\eab0";
 }
 body {
-  font-family: "Montserrat", "Noto Sans JP", sans-serif;
+  font-family: "FontAwesome", "Avenir Next", sans-serif;
   font-weight: 300;
 }
 html {
@@ -219,7 +235,7 @@ html {
   top: 0;
   width: 100%;
   height: 100%;
-  background: #222;
+  background: #5C5552;
   opacity: 0;
 }
 #overlay.open {
@@ -253,14 +269,14 @@ body.scroll-lock {
 /* content */
 .content li li {
   margin-left: 0.8em;
-  font-size: 0.9em;
+  font-size: 1.0em;
 }
 .content {
   margin-bottom: 3em;
-  font-family: "Open Sans", sans-serif;
+  font-family: "FontAwesome", "Avenir Next", sans-serif;
 }
 .content li {
-  font-size: 1.1em;
+  font-size: 1.0em;
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
 }
@@ -273,7 +289,7 @@ body.scroll-lock {
 .content p {
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
-  font-size: 1.1em;
+  font-size: 1.0em;
   letter-spacing: 0.03em;
 }
 .content h1,.content h2,.content h3,.content h4,.content h5,.content h6 {
@@ -343,7 +359,7 @@ body.scroll-lock {
 
 /* base */
 .sans {
-  font-family: "Open Sans", sans-serif;
+  font-family: "FontAwesome", "Avenir Next", sans-serif;;
 }
 pre {
   padding: 0.5rem;
@@ -353,7 +369,7 @@ pre {
 code,
 kbd,
 samp {
-  font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+  font-family: "FontAwesome", "Avenir Next", sans-serif;
     monospace;
   font-size: 1em;
 }
